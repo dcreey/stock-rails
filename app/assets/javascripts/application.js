@@ -13,4 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require tether
+//= require bootstrap-sprockets
 //= require_tree .
+
+$(function () {
+    // $('#companies th a').live('click', function () {
+    //     $.getScript(this.href);
+    //     return false;
+    // });
+})
