@@ -1,14 +1,19 @@
 <% content_for :title do %>Companies<% end %>
 
-<%= form_tag company_path, :method => 'get' do %>
-    <%= hidden_field_tag :direction, params[:direction] %>
-    <%= hidden_field_tag :sort, params[:sort] %>
-    <p>
-      <%= text_field_tag :name, params[:name] %>
-      <%= submit_tag "Search", :name => nil %>
-    </p>
-<% end %>
+<div class="col-md-6">
+  <%= form_tag company_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :name, params[:name] %>
+        <%= submit_tag "Search", :name => nil %>
+      </p>
+      <div id="companies"><%= render 'company/companies' %></div>
+  <% end %>
 
-<div id="companies"><%= render 'company/companies' %></div>
 
-<%= will_paginate @companies %>
+
+</div>
+<div class="col-md-6">
+  <div id="companyHistory"><%= render 'company/company_history' %></div>
+</div>
+
+

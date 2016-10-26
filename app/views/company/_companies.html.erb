@@ -1,14 +1,23 @@
-<table class="pretty">
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<table class="grid">
   <tr>
     <th><%= sortable "name" %></th>
     <th><%= sortable "symbol" %></th>
     <th><%= sortable "market_cap", "Market Cap" %></th>
+    <th><%= sortable "exchange_id", "Exchange" %></th>
   </tr>
   <% for company in @companies %>
       <tr>
         <td><%= company.name %></td>
-        <td><%= company.symbol %></td>
+        <td>
+          <a href="javascript:window.companyHistory.buildLineSeries('<%= company.symbol %>','<%= company.name %>')">
+            <%= company.symbol %>
+          </a>
+        </td>
         <td class="price"><%= number_to_currency(company.market_cap, :unit => "$") %></td>
+        <td><%= company.exchange.name %></td>
       </tr>
   <% end %>
 </table>
+<%= will_paginate @companies %>

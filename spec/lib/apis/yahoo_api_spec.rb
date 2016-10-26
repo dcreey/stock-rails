@@ -1,5 +1,5 @@
 require 'rspec'
-require 'Company'
+require 'cgi'
 require_relative  '../../../lib/apis/yahoo_api'
 
 describe 'Yahoo API Service Tests' do
@@ -26,4 +26,10 @@ describe 'Yahoo API Service Tests' do
     history = api.get_stock_history_by_symbol('AAAABBBZZZZ123')
     expect(history.size).to equal(0)
   end
+
+  it 'Should return list of stocks for stock symbol with special character' do
+    history = api.get_stock_history_by_symbol('EPM^A')
+    expect(history.size).to be >  1
+  end
+
 end

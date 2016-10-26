@@ -1,0 +1,66 @@
+<style>
+
+</style>
+
+<svg id="historySVG" class='line-series'></svg>
+
+<script>
+  window.companyHistory = {};
+  $(function() {
+    const mls = window.multiLineSeries('#historySVG', 'Price, Dollars', 'Date - Last 30 Days');
+
+    // destroy existing history line series then build new one
+    window.companyHistory.buildLineSeries = function(symbol, name){
+      const title = name + ' Stock History';
+      mls.destroy();
+      createHistoryLineSeries(symbol, title)
+    };
+
+    // get history data for passed company symbol and build line series chart
+    function createHistoryLineSeries(symbol, title){
+      $.get('company/history/' + encodeURIComponent(symbol), function(d) {
+        // map data to be used by line series function
+        const data = [{
+          id: 'low',
+          values: []
+        },{
+          id: 'high',
+          values: []
+        },{
+          id: 'open',
+          values: []
+        },{
+          id: 'close',
+          values: []
+        }];
+        d.forEach(function(x) {
+          data[0].values.push({
+            date: convertDate(x.table.trade_date),
+            yValue: parseFloat(x.table.low)
+          });
+          data[1].values.push({
+            date: convertDate(x.table.trade_date),
+            yValue: parseFloat(x.table.high)
+          });
+          data[2].values.push({
+            date: convertDate(x.table.trade_date),
+            yValue: parseFloat(x.table.open)
+          });
+          data[3].values.push({
+            date: convertDate(x.table.trade_date),
+            yValue: parseFloat(x.table.close)
+          });
+        });
+        mls.create(data, title); // create line series
+      });
+    }
+
+    function convertDate(date){
+      dateArr = date.split('-');
+      return new Date(dateArr[0], dateArr[1] -1, dateArr[2]);
+    }
+
+    // create the history for the first row
+    window.location.href = $(".grid td a").first().attr('href');
+  })
+</script>
