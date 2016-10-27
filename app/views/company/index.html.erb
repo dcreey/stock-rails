@@ -1,7 +1,7 @@
 <% content_for :title do %>Companies<% end %>
 
 <div class="col-md-6">
-  <%= form_tag root_path, :method => 'get' do %>
+  <%= form_tag '/company', :method => 'get' do %>
       <p>
         <%= text_field_tag :name, params[:name] %>
         <%= submit_tag "Search", :name => nil %>

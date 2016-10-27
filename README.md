@@ -26,28 +26,33 @@ To build this application, run the following command line operations:
 * bundler install
 
 To load the schema and import seed data
-* rails db:load
-* rails import_stock_csv:create_companies_and_exchanges
+* rake db:setup
+* rake import_stock_csv:create_companies_and_exchanges
 
 To run
 * rails server
+
+To test
+* rspec spec
 
 Documentation and Support
 -------------------------
 ### API - Endpoints
 #### Stock History
 Returns last 30 days of stock price history
-* company/history/:symbol
-    * <code>GET</code> /company/history/:symbol
+* company/:symbol/history
+    * <code>GET</code> /company/:symbol/history
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `[{table:{...stockInfo}}, {table:{...stockInfo}}]`
+    **Content:** `[{low:'', high:'', open:'', close:'', trade_date:'', ...stockInfo}, ...histories]`
  
 * **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "No history found for :symbol" }`
+  * **URL:** <code>GET</code> /company/NONEXISTENT/history <br />
+    **Code:** 404 NOT FOUND <br />
+    **ResponseMessage:** `"No History Found For :symbol"`
     
-  * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ error : "Symbol is required" }`
+  * **URL:** <code>GET</code> /company/^/history <br />
+    **Code:** 400 BAD REQUEST <br />
+    **ResponseMessage:** `"Symbol is required"`

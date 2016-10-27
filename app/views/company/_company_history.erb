@@ -14,7 +14,7 @@
 
     // get history data for passed company symbol and build line series chart
     function createHistoryLineSeries(symbol, title){
-      $.get('company/history/' + encodeURIComponent(symbol), function(d) {
+      $.get('company/' + encodeURIComponent(symbol) + '/history', function(d) {
         // map data to be used by line series function
         mapData(d).then(function (data) {
           mls.create(data, title); // create line series
@@ -42,20 +42,20 @@
         }];
         d.forEach(function(x) {
           data[0].values.push({
-            date: convertDate(x.table.trade_date),
-            yValue: parseFloat(x.table.low)
+            date: convertDate(x.trade_date),
+            yValue: parseFloat(x.low)
           });
           data[1].values.push({
-            date: convertDate(x.table.trade_date),
-            yValue: parseFloat(x.table.high)
+            date: convertDate(x.trade_date),
+            yValue: parseFloat(x.high)
           });
           data[2].values.push({
-            date: convertDate(x.table.trade_date),
-            yValue: parseFloat(x.table.open)
+            date: convertDate(x.trade_date),
+            yValue: parseFloat(x.open)
           });
           data[3].values.push({
-            date: convertDate(x.table.trade_date),
-            yValue: parseFloat(x.table.close)
+            date: convertDate(x.trade_date),
+            yValue: parseFloat(x.close)
           });
         });
         res(data);

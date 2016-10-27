@@ -13,8 +13,11 @@ namespace :import_stock_csv do
     exchange_nyse = Exchange.find_or_create_by(:name => 'nyse')
 
     import_and_load_data(csv_path_amex, exchange_amex.id)
+    puts "companylist_amex.csv processed"
     import_and_load_data(csv_path_nasdaq, exchange_nasdaq.id)
+    puts "companylist_nasdaq.csv processed"
     import_and_load_data(csv_path_nyse, exchange_nyse.id)
+    puts "companylist_nyse.csv processed"
   end
 end
 

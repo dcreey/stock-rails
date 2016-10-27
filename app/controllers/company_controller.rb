@@ -9,7 +9,7 @@ class CompanyController < ApplicationController
 
   # api endpoint - exposes yahoo_api history search
   # symbol is required
-  # returns list of last 30 days of stock information
+  # returns array of last 30 days of stock price information
   def get_history
     stock = StockHistory.new
     @history = stock.get_by_symbol(params[:symbol])
@@ -24,7 +24,7 @@ class CompanyController < ApplicationController
          end
        else
         format.json do
-          render :json => @history
+          render :json => @history.map { |o| Hash[o.each_pair.to_a] }.to_json
         end
       end
       format.html { render :get_history }

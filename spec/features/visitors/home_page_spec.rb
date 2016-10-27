@@ -8,15 +8,6 @@ feature 'Home page' do
 
   # Scenario: Visit the home page
   #   Given I am a visitor
-  #   When I visit the home page
-  #   Then I see companies
-  scenario 'visit the home page' do
-    get root_path
-    page.should render_template '/company/companies'
-  end
-
-  # Scenario: Visit the home page
-  #   Given I am a visitor
   #   When I search for company name of "Apple"
   #   Then I see "Apple" company
   scenario 'User searches for a company' do
@@ -25,7 +16,10 @@ feature 'Home page' do
     fill_in "name", :with => "Apple"
     click_button "Search"
 
-    expect("name").to have_content("Apple")
+    # has grid object - _companies.html.erb rendered
+    page.find(:css, ".grid", :visible => true)
+    # has svg object - _company_history.html.erb rendered
+    page.find(:id, "historySVG", :visible => true)
   end
 
 end
