@@ -1,7 +1,3 @@
-<style>
-
-</style>
-
 <svg id="historySVG" class='line-series'></svg>
 
 <script>
@@ -20,6 +16,17 @@
     function createHistoryLineSeries(symbol, title){
       $.get('company/history/' + encodeURIComponent(symbol), function(d) {
         // map data to be used by line series function
+        mapData(d).then(function (data) {
+          mls.create(data, title); // create line series
+        });
+      }).fail(function(err) {
+        alert(err.responseText);
+      });
+//      }, function(err) { alert(err); });
+    }
+
+    function mapData(d){
+      return new Promise(function(res){
         const data = [{
           id: 'low',
           values: []
@@ -51,8 +58,8 @@
             yValue: parseFloat(x.table.close)
           });
         });
-        mls.create(data, title); // create line series
-      });
+        res(data);
+      })
     }
 
     function convertDate(date){

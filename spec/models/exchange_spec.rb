@@ -1,9 +1,9 @@
-require 'rspec'
+require 'rails_helper'
 
-describe 'My behaviour' do
+describe 'Exchange Model Tests' do
 
-  it 'should do something' do
-
-    true.should == false
+  it 'should not save without name' do
+    build(:exchange, name: nil).should_not be_valid
   end
+
 end
