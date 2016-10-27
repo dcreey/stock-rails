@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     flash.now[:notice] = ["Found the about page!"] if request.path == '/about'
 
     # Display the company notices the first time the user navigates to the page this session
-    if not session[:company_notice_shown] and request.path == root_path
+    if not session[:company_notice_shown] and request.path == '/company'
       flash.now[:notice] = ["Search for stock by name"]
       flash.now[:notice] << "Click company symbol to view the last 30 days of stock history"
       session[:company_notice_shown] = true
